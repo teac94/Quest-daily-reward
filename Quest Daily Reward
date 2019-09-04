@@ -1,0 +1,88 @@
+quest daily_present begin
+	state start begin
+		when login begin
+			local TODAY = tonumber(os.date("%d"))
+			local MONTH = tonumber(os.date("%m"))
+			local MY_PACK = pc.getqf("saved_day")
+			local SAFTY = pc.getqf("saved_login")
+			local SAFTY_MONTH = pc.getqf("saved_month")
+			local REST = TODAY - MY_PACK
+			local STAGEONE = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local STAGETWO = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local STAGETHREE = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local STAGEFOUR = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local STAGEFIVE = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local STAGESIX = {50035, 50036, 50031, 50025, 50024, 50031, 50032}
+			local ITEMS
+			if REST == 1 then
+				pc.setqf("saved_day", TODAY)
+				pc.setqf("saved_month", MONTH)
+				pc.setqf("saved_login", pc.getqf("saved_login")+1)
+				chat("Du loggst dich zum "..pc.getqf("saved_login").." mal hinter einander ein.")
+				if SAFTY < 11 then
+					ITEMS = STAGEONE[number(1, table.getn(STAGEONE))]
+				elseif SAFTY > 10 and SAFTY < 21 then
+					ITEMS = STAGETWO[number(1, table.getn(STAGETWO))]
+				elseif SAFTY > 20 and SAFTY < 31 then
+					ITEMS = STAGETHREE[number(1, table.getn(STAGETHREE))]
+				elseif SAFTY > 30 and SAFTY < 41 then
+					ITEMS = STAGEFOUR[number(1, table.getn(STAGEFOUR))]
+				elseif SAFTY > 40 and SAFTY < 51 then
+					ITEMS = STAGEFIVE[number(1, table.getn(STAGEFIVE))]
+				elseif SAFTY > 50 then
+					ITEMS = STAGESIX[number(1, table.getn(STAGESIX))]    
+					pc.give_item2(ITEMS, 1)
+				end    
+				chat("Dein tägliches Present ist heute: "..item_name(ITEMS).."!")
+			end
+			if MONTH != SAFTY_MONTH then
+				if pc.getqf("first") == 0 then
+					pc.setqf("first", 1)
+					pc.setqf("saved_day", TODAY)
+					pc.setqf("saved_month", MONTH)
+					pc.setqf("saved_login", 1)
+					chat("Du loggst dich zum "..pc.getqf("saved_login").." mal hinter einander ein.")
+					ITEMS = STAGEONE[number(1, table.getn(STAGEONE))]    
+					chat("Dein tägliches Present ist heute: "..item_name(ITEMS).."!")
+				else    
+					if TODAY == 1 then
+						pc.setqf("saved_day", TODAY)
+						pc.setqf("saved_month", MONTH)
+						pc.setqf("saved_login", pc.getqf("saved_login")+1)
+						chat("Du loggst dich zum "..pc.getqf("saved_login").." mal hinter einander ein.")
+						if SAFTY < 11 then
+							ITEMS = STAGEONE[number(1, table.getn(STAGEONE))]
+						elseif SAFTY > 10 and SAFTY < 21 then
+							ITEMS = STAGETWO[number(1, table.getn(STAGETWO))]
+						elseif SAFTY > 20 and SAFTY < 31 then
+							ITEMS = STAGETHREE[number(1, table.getn(STAGETHREE))]
+						elseif SAFTY > 30 and SAFTY < 41 then
+							ITEMS = STAGEFOUR[number(1, table.getn(STAGEFOUR))]
+						elseif SAFTY > 40 and SAFTY < 51 then
+							ITEMS = STAGEFIVE[number(1, table.getn(STAGEFIVE))]
+						elseif SAFTY > 50 then
+							ITEMS = STAGESIX[number(1, table.getn(STAGESIX))]    
+							pc.give_item2(ITEMS, 1)
+						end    
+						chat("Dein tägliches Present ist heute: "..item_name(ITEMS).."!")
+					else
+						pc.setqf("saved_day", TODAY)
+						pc.setqf("saved_month", MONTH)
+						pc.setqf("saved_login", 1)
+						chat("Du loggst dich zum "..pc.getqf("saved_login").." mal hinter einander ein.")
+						ITEMS = STAGEONE[number(1, table.getn(STAGEONE))]    
+						chat("Dein tägliches Present ist heute: "..item_name(ITEMS).."!")
+					end    
+				end    
+			end
+			if REST > 1 then
+				pc.setqf("saved_day", TODAY)
+				pc.setqf("saved_month", MONTH)
+				pc.setqf("saved_login", 1)
+				chat("Du loggst dich zum "..pc.getqf("saved_login").." mal hinter einander ein.")
+				ITEMS = STAGEONE[number(1, table.getn(STAGEONE))]    
+				chat("Dein tägliches Present ist heute: "..item_name(ITEMS).."!")
+			end
+		end
+	end
+end
